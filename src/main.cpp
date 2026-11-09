@@ -17,6 +17,14 @@ Timezone fuso;
 const char *SSID = "SENAI EDUCACIONAL";
 const char *SENHA = "info@134";
 
+float tempAnterior;
+float sensAnterior;
+int umiAnterior;
+int presAnterior;
+String condAnterior;
+String nascAnterior;
+String dataAnt;
+String horaAnt;
 
 const unsigned long tempoConexao = 10000;
 const unsigned long tempoReconexao = 5000;
@@ -99,15 +107,30 @@ void loop() {
     String horaAtual = doc["hora"];
 
 
-    lcd.clear();
-    lcd.setCursor(0,0);
-    lcd.print("D:" + dataAtual + "     H:" + horaAtual);
-    lcd.setCursor(0,1);
-    lcd.print( "T:" + String(temperatura, 1) + " C    S:" + String(sensacao, 1) + " C");
-    lcd.setCursor(0,2);
-    lcd.print("U:" + String(umidade) + "%       P:" + String(pressao));
-    lcd.setCursor(0,3);
-    lcd.print("C:" + condicao.substring(0, 6) + "   N.S:" + nascerSol.substring(0, 5));
+    
+
+
+    if (tempAnterior != temperatura || sensAnterior != sensacao || umiAnterior != umidade || presAnterior != pressao || condAnterior != condicao || nascAnterior != nascerSol || dataAnt != dataAnt || horaAnt != horaAtual){
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print("D:" + dataAtual + "     H:" + horaAtual);
+      lcd.setCursor(0,1);
+      lcd.print( "T:" + String(temperatura, 1) + " C    S:" + String(sensacao, 1) + " C");
+      lcd.setCursor(0,2);
+      lcd.print("U:" + String(umidade) + "%       P:" + String(pressao));
+      lcd.setCursor(0,3);
+      lcd.print("C:" + condicao.substring(0, 6) + "   N.S:" + nascerSol.substring(0, 5));
+
+      tempAnterior = temperatura;
+      sensAnterior = sensacao;
+      umiAnterior = umidade;
+      presAnterior = pressao;
+      condAnterior = condicao;
+      nascAnterior = nascerSol;
+      dataAnt = dataAtual;
+      horaAnt = horaAtual;
+
+    }
 
 
     tempoAnterior = tempoAtual;
